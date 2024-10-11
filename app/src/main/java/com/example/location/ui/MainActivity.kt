@@ -22,7 +22,7 @@ import com.example.location.viewmodel.LocationViewModel
 
 
 class MainActivity : ComponentActivity() {
-   //private lateinit var locationViewModel: LocationViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -20,13 +20,13 @@ class LocationViewModel(context: Context):ViewModel() {
 
     fun getLocationLiveData() = locationLiveData
 }
-
+@Composable
 fun Location(viewModel: LocationViewModel) {
     val location by viewModel.getLocationLiveData().observeAsState()
 
     if (location !== null) {
-        Text(("Location available"))
-    }
+        Text("Location available")
+    } else { Text("No location available" )}
     Column() {
         if(location !== null) {
             Text(location?.latitude.toString())
