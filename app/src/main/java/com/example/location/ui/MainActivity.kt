@@ -16,22 +16,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.app.ActivityCompat
 import android.Manifest
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import com.example.location.ui.theme.LocationTheme
-
+import com.example.location.viewmodel.Location
+import com.example.location.viewmodel.LocationViewModel
 
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        val locationViewModel: LocationViewModel=LocationViewModel(this)
         setContent {
             LocationTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Tauno",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                Surface (
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ){  }
+                    Location(locationViewModel)
+
             }
         }
 
