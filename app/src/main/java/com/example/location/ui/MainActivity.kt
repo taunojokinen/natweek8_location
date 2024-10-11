@@ -5,17 +5,15 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.app.ActivityCompat
 import android.Manifest
+import android.util.Log
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import com.example.location.ui.theme.LocationTheme
@@ -24,6 +22,8 @@ import com.example.location.viewmodel.LocationViewModel
 
 
 class MainActivity : ComponentActivity() {
+   //private lateinit var locationViewModel: LocationViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val locationViewModel: LocationViewModel=LocationViewModel(this)
@@ -32,19 +32,20 @@ class MainActivity : ComponentActivity() {
                 Surface (
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
-                ){  }
+                ) {
                     Location(locationViewModel)
+                }
 
             }
         }
 
-        getPermissionsForLocation()
+        getPermissionsForLocation(locationViewModel)
 
     }
 
 
 
-private fun getPermissionsForLocation() {
+private fun getPermissionsForLocation(viewModel: LocationViewModel) {
     if (ActivityCompat.checkSelfPermission(
             this,
             Manifest.permission.ACCESS_FINE_LOCATION
@@ -59,11 +60,11 @@ private fun getPermissionsForLocation() {
         { permissions ->
             when {
                 permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
-                    //Precise
+                    viewModel.getLocationLiveData().getLocationData()
                 }
 
                 permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
-                    //Coarse
+                    viewModel.getLocationLiveData().getLocationData()
                 }
 
                 else -> {
